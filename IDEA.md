@@ -1,0 +1,1 @@
+We want to make a website that does deterministic language to language translation, like python to C. The main benefiters are bisunesses or people who prefer to use python in their day to day coding, but wish their website would run in C.
