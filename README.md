@@ -2,11 +2,15 @@
 Web Development Server where our personal project lives
 
 
-____Name_____________Github account______
-William Duby        DubyD
-Edmund Chang        Edmundchang7
-Ivan Matviichuk     imatvii
-Hasanat Ashraf
+____Name_____________Github account:
+
+William Duby_________DubyD
+
+Edmund Chang_________Edmundchang7
+
+Ivan Matviichuk______imatvii
+
+Hasanat Ashraf_______
 
 
 
