@@ -6,7 +6,7 @@ ____Name_____________Github account:____
 
 William Duby_________DubyD
 
-Edmund Chang_________Edmundchang7
+Edmund Chang________Edmundchang7
 
 Ivan Matviichuk______imatvii
 
