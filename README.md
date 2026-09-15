@@ -27,6 +27,3 @@ of the group, or the members of the group present if time
 constraints are an issue, and once all arguments are aired
 out we will have a vote between the members present at the
 time of the disagreement.
-
-
-Add a section to README.md (or a separate IDEA.md) with 3 to 5 sentences describing the domain your team wants to build and why it interests the team from a Computing for the Common Good standpoint. Concretely: who benefits from this application, and what problem does it address that matters beyond the classroom? This does not need to be final; it is a stake in the ground that you will refine as the project develops.
