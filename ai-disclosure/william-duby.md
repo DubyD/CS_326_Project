@@ -1,2 +1,2 @@
 Sprint 0- No Ai was used in the execution of this step
-Lab 2- No Ai was used
+Sprint 1- No Ai was used
