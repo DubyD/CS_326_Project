@@ -8,7 +8,9 @@ const PORT = 3000; // This can be altered to a more preferable port if desired
  */
 
 const homePageHandler = (req, res) => {
-  res.send("Hello, web!");
+  res.send(
+    "Welcome! This is a project that translates code from different languages (such as Python) into C, using open-source compilers and decompilers.",
+  );
 };
 
 const aboutPageHandler = (req, res) => {
