@@ -1,5 +1,25 @@
 {
   "dependencies": {
     "express": "^5.2.1"
-  }
+  },
+  "name": "cs_326_project",
+  "version": "1.0.0",
+  "description": "Web Development Server where our personal project lives",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DubyD/CS_326_Project.git"
+  },
+  "keywords": [],
+  "author": "William Duby, Ivan Matviichuk, Edmund Chang, Hasanat Ashraf",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/DubyD/CS_326_Project/issues"
+  },
+  "homepage": "https://github.com/DubyD/CS_326_Project#readme"
 }
