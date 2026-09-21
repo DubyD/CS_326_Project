@@ -3,7 +3,7 @@ const app = express();
 const PORT = 3000;
 app.set("view engine", "ejs");
 app.get("/", (req, res) => {
-  res.send("Hello, web!");
+  res.send("Welcome! This is a project that translates code from different languages (such as Python) into C, using open-source compilers and decompilers.");
 });
 
 app.get("/about", (req, res) => {
