@@ -17,7 +17,7 @@
   "keywords": [],
   "author": "William Duby, Ivan Matviichuk, Edmund Chang, Hasanat Ashraf",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/DubyD/CS_326_Project/issues"
   },
