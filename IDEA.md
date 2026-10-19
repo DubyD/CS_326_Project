@@ -1,1 +1,8 @@
 We want to make a website that does deterministic language to language translation, like python to C. The main beneficiaries are businesses or people who prefer to use python but yearn for better performance and are not systems programmers. This interests Computing for the Common Good because we can solve problems for people who might not have access to the knowledge of C programming or might be overwhelmed with the vast knowledge available on the internet. We're personally interested in the project because we can incorporate this service into our future projects in case it has been a while since working with C or for an example are having issues solving a problem in C without a memory leak that we can solve in another language.
+
+Tasks:
+
+- dropdown menu of coding languages
+- input text box for code
+- 'generate' confirmation button
+-
