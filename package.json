@@ -1,12 +1,12 @@
 {
   "dependencies": {
+    "ejs": "^7.0.2",
     "express": "^5.2.1"
   },
   "name": "cs_326_project",
   "version": "1.0.0",
   "description": "Web Development Server where our personal project lives",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
