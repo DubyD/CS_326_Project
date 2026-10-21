@@ -11,7 +11,7 @@ echo ==^> Checking Python
 where python >nul 2>nul || winget install -e --id Python.Python.3.12 --accept-source-agreements --accept-package-agreements
 
 echo ==^> Checking JDK 21
-where java >nul 2>nul || winget install -e --id Microsoft.OpenJDK.21 --accept-source-agreements --accept-package-agreements
+where java -version 2>&1 | findstr /R /C:"version .2[1-9]" >nul || winget install -e --id Microsoft.OpenJDK.21 --accept-source-agreements --accept-package-agreements
 
 echo ==^> Checking C compiler (gcc via MinGW-w64)
 where gcc >nul 2>nul || winget install -e --id BrechtSanders.WinLibs.POSIX.UCRT --accept-source-agreements --accept-package-agreements

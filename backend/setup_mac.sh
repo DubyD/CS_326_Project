@@ -14,7 +14,7 @@ if ! command -v brew >/dev/null 2>&1; then
 fi
 
 echo "==> Checking C compiler (gcc/clang)"
-if ! command -v gcc >/dev/null 2>&1; then
+if ! xcode-select -p >/dev/null 2>&1; then
   xcode-select --install || true
   echo "Finish the Xcode Command Line Tools install, then re-run this script."
   exit 1
