@@ -1,50 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Code to C Converter</title>
-  <link rel="stylesheet" href="/style.css">
-  <script src="/app.js" defer></script>
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Code to C Converter</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/app.js" defer></script>
+  </head>
 
-<body>
-  <div class="container">
+  <body>
+    <div class="container">
+      <h1>Code to C Converter</h1>
 
-    <h1>Code to C Converter</h1>
+      <p>
+        Select a programming language and enter your code below to convert it
+        into C.
+      </p>
 
-    <p>Select a programming language and enter your code below to convert it into C.</p>
+      <form id="converterForm">
+        <label for="language">Select Programming Language:</label>
 
-    <form id="converterForm">
+        <select id="language" name="language" required>
+          <option value="C">C (.c)</option>
+          <option value="python">Python (.py)</option>
+          <option value="javascript">JavaScript (.js)</option>
+          <option value="java">Java (.java)</option>
+        </select>
 
-      <label for="language">Select Programming Language:</label>
+        <label for="sourceCode">Enter Your Code:</label>
 
-      <select id="language" name="language" required>
-        <option value="python">Python (.py)</option>
-        <option value="javascript">JavaScript (.js)</option>
-        <option value="java">Java (.java)</option>
-      </select>
+        <textarea
+          id="sourceCode"
+          name="sourceCode"
+          rows="12"
+          placeholder="Paste your code here..."
+          required
+        ></textarea>
 
-      <label for="sourceCode">Enter Your Code:</label>
+        <button type="submit">Convert to C</button>
+      </form>
 
-      <textarea
-        id="sourceCode"
-        name="sourceCode"
-        rows="12"
-        placeholder="Paste your code here..."
-        required
-      ></textarea>
+      <h2>Converted C Code:</h2>
 
-      <button type="submit">Convert to C</button>
+      <pre id="result">Your converted code will appear here.</pre>
 
-    </form>
-
-    <h2>Converted C Code:</h2>
-
-    <pre id="result">Your converted code will appear here.</pre>
-
-    <p id="errorMessage" role="alert"></p>
-
-  </div>
-</body>
+      <p id="errorMessage" role="alert"></p>
+    </div>
+  </body>
 </html>

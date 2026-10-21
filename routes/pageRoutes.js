@@ -1,4 +1,4 @@
-import { Routes } from "express";
+import { Router } from "express";
 import { homePage, aboutPage } from "../controllers/pageCOntroller.js";
 
 const router = Router();
