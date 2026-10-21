@@ -5,9 +5,7 @@ app.use(express.static("public"));
 
 const PORT = 3000; // This can be altered to a more preferable port if desired
 
-/**
- * Handler methods
- */
+// Handler methods
 
 const homePageHandler = (req, res) => {
   res.render("index");
@@ -21,9 +19,7 @@ const aboutPageHandler = (req, res) => {
   });
 };
 
-/**
- * Server paths, and actions
- */
+// Server paths, and actions
 
 app.set("view engine", "ejs");
 app.get("/", homePageHandler);
