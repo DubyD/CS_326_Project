@@ -2,6 +2,7 @@ import os
 import shutil
 import subprocess
 import tempfile
+import sys
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 IS_WINDOWS = os.name == "nt"
@@ -28,10 +29,9 @@ def find_ghidra():
 def compile_c(input_file, output_binary):
     try:
         subprocess.run(["gcc", "-o", output_binary, input_file], check=True)
-        print("Compilation successful.")
         return True
     except (subprocess.CalledProcessError, FileNotFoundError) as e:
-        print(f"Compilation failed: {e}")
+        print(f"Compilation failed: {e}", file=sys.stderr)
         return False
 
 
@@ -58,35 +58,42 @@ def decompile_with_ghidra(binary_file, output_file):
             text=True,
         )
         if result.returncode != 0:
-            print("Decompilation failed:")
-            print(result.stdout)
-            print(result.stderr)
+            print("Decompilation failed:", file=sys.stderr)
+            print(result.stdout[-2000:], file=sys.stderr)
+            print(result.stderr[-2000:], file=sys.stderr)
             return False
-        print("Decompilation successful.")
         return True
     finally:
         shutil.rmtree(project_dir, ignore_errors=True)
 
 
 def main():
+    # Use paths from Node if given, otherwise fall back to the defaults
+    if len(sys.argv) >= 3:
+        input_c, output_file = sys.argv[1], sys.argv[2]
+    else:
+        input_c, output_file = INPUT_C, OUTPUT_FILE
+
+    # Unique per process so concurrent requests don't clobber each other
     binary = os.path.join(
-        tempfile.gettempdir(), "converter_output" + (".exe" if IS_WINDOWS else "")
+        tempfile.gettempdir(),
+        f"converter_{os.getpid()}" + (".exe" if IS_WINDOWS else ""),
     )
 
-    if not compile_c(INPUT_C, binary):
-        return
+    if not compile_c(input_c, binary):
+        return 1
 
     try:
-        if decompile_with_ghidra(binary, OUTPUT_FILE) and os.path.exists(OUTPUT_FILE):
-            with open(OUTPUT_FILE, "r") as f:
-                print(f"Decompiled code (saved to {OUTPUT_FILE}):\n")
-                print(f.read())
-        else:
-            print("Decompiled file not found.")
+        if not decompile_with_ghidra(binary, output_file):
+            return 1
+        if not os.path.exists(output_file):
+            print("Decompiled file not found.", file=sys.stderr)
+            return 1
+        return 0
     finally:
         if os.path.exists(binary):
             os.remove(binary)
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

@@ -34,10 +34,8 @@ This project is to help with translating code from upper level languages and com
 Getting started:
 
 - Clone this repository
-- Install express in your local machines using the shell commands:
-  - npm init -y
-  - npm pkg set type=module
-  - npm install express
-- Then start the program with npm from the shell with the shell with the command:
+- Installation: 
+  - npm install
+- Then start the program: 
   - npm start
 - Our server is Listening on port 3000.
