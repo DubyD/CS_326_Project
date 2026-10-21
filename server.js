@@ -1,6 +1,7 @@
 import express from "express";
 
 const app = express();
+app.use(express.static("public"));
 
 const PORT = 3000; // This can be altered to a more preferable port if desired
 
@@ -9,9 +10,7 @@ const PORT = 3000; // This can be altered to a more preferable port if desired
  */
 
 const homePageHandler = (req, res) => {
-  res.send(
-    "Welcome! This is a project that translates code from different languages (such as Python) into C, using open-source compilers and decompilers.",
-  );
+  res.render("index");
 };
 
 
