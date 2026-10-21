@@ -4,11 +4,8 @@ import pageRoutes from "./routes/pageRoutes.js";
 
 const app = express();
 const PORT = 3000; // This can be altered to a more preferable port if desired
-app.use(express.static("public"));
 
-/**
- * Server paths, and actions
- */
+// Server paths, and actions
 
 app.set("view engine", "ejs");
 app.use(express.json());
