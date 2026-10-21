@@ -1,9 +1,10 @@
 import express from "express";
+import conversionRoutes from "./routes/conversionRoutes.js";
+import pageRoutes from "./routes/pageRoutes.js";
 
 const app = express();
-app.use(express.static("public"));
-
 const PORT = 3000; // This can be altered to a more preferable port if desired
+app.use(express.static("public"));
 
 /**
  * Handler methods
@@ -12,7 +13,6 @@ const PORT = 3000; // This can be altered to a more preferable port if desired
 const homePageHandler = (req, res) => {
   res.render("index");
 };
-
 
 const aboutPageHandler = (req, res) => {
   res.render("about", {
@@ -26,9 +26,15 @@ const aboutPageHandler = (req, res) => {
  */
 
 app.set("view engine", "ejs");
-app.get("/", homePageHandler);
+app.use(express.json());
+app.use(express.static("public"));
 
+app.get("/", homePageHandler);
 app.get("/about", aboutPageHandler);
+
+app.use((req, res) => {
+  res.status(404).json({ message: "page not found." });
+});
 
 app.listen(PORT, () => {
   console.log(`Listening on http://localhost:${PORT}`);
