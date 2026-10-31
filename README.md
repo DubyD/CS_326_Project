@@ -35,7 +35,13 @@ Getting started:
 
 - Clone this repository
 - Installation: 
-  - npm install
+- MacOS/Linux:
+npm install
+bash backend/setup_mac.sh
+- Windows
+npm install
+backend\setup_windows.bat
+
 - Then start the program: 
   - npm start
 - Our server is Listening on port 3000.
