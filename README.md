@@ -31,11 +31,40 @@ Hasanat Ashraf**\_\_\_** Hasanat-Ashraf
 
 This project is to help with translating code from upper level languages and compiling it into machine code, then decompiling it into C language. We implemented an Ai component to alter the variable names into human language, and to remove some of the guard rails upper level languages deploy which can make for inefficient code, to allow greater access to more to performance that may be out of reach for people who are not systems programmers.
 
-Getting started:
+**\*\***\_\_\_\_**\*\***Getting started for new users:**\*\***\_\_\_\_**\*\***
 
 - Clone this repository
-- Installation: 
-  - npm install
-- Then start the program: 
-  - npm start
+- Installation:
+  - MacOS/Linux:
+    npm install
+    bash backend/setup_mac.sh
+
+  - Windows through powershell (A):
+    npm install
+    backend\setup_windows.bat
+
+  - Windows through virtual environment (B):
+    python3 -m venv .venv
+    source .venv/bin/activate
+    MacOS installation instructions above.
+
+**\*\***\_\_\_\_**\*\***Starting the Program:**\*\***\_\_\_\_**\*\***
+
+- npm start
 - Our server is Listening on port 3000.
+
+**\*\***\_\_\_\_**\*\***Errors you may run into:**\*\***\_\_\_\_**\*\***
+
+Situation What happens
+Empty code box "Please enter code to convert." (400)
+Unsupported language "Unsupported language …" (400)
+Code that doesn't compile The gcc error message (422)
+Ghidra not installed "Ghidra not found…" (500). Use the dev container or run a setup script.
+
+**\*\***\_\_\_\_**\*\*Design Decisions:**\*\***\_\_\_\_**\*\*\*\*
+
+William Duby:
+-Sprint 2: I separated the controller, routes, services, and server. Having considered keeping these methods all in the server since it was already written in one file, however the readability was already difficult and would continue to get worse if left in the state that it was created. This version is superior because when we expand the functionality of the app we will have easier scalability and adaptability for future app functions. Without this change it would be challenging to ensure any updates or new functionality will give the expected results without combing through and matching up all possibilities. Readability is a major upgrade for any code.
+
+Ivan Matviichuk:
+-Sprint 2: One of the biggest changes I made was making everything to run from a local folder, before I made shell/bat files to install dependencies in the root, but now it installs evertyhing in local tools directory, so everyones files are the same and can be ran identically. I considered installing the dependencies in the root, but then it would work on my computer and break on someone elses, so I wanted to make sure everyone running this have the same tools installed in the same location such as ghidra and JDK
