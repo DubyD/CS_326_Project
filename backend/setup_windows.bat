@@ -13,7 +13,7 @@ set GHIDRA_URL=https://github.com/NationalSecurityAgency/ghidra/releases/downloa
 set JDK_URL=https://api.adoptium.net/v3/binary/latest/21/ga/windows/x64/jdk/hotspot/normal/eclipse
 set TOOLS_DIR=%~dp0tools
 set GHIDRA_DIR=%TOOLS_DIR%\%GHIDRA_NAME%
-set JDK_DIR=%TOOLS_DIR%\jdk
+set JDK_DIR=%TOOLS_DIR%\jdk-windows-x64
 set NEED_REOPEN=0
 
 echo ==^> Checking Python
@@ -32,7 +32,7 @@ if errorlevel 1 (
 
 if not exist "%TOOLS_DIR%" mkdir "%TOOLS_DIR%"
 
-echo ==^> Installing JDK 21 into backend\tools\jdk
+echo ==^> Installing JDK 21 into backend\tools\jdk-windows-x64
 if exist "%JDK_DIR%\bin\java.exe" (
     echo     already installed
 ) else (
@@ -41,7 +41,7 @@ if exist "%JDK_DIR%\bin\java.exe" (
     curl.exe -fL --retry 3 -o "%TOOLS_DIR%\jdk.zip" "%JDK_URL%" || goto :fail
     mkdir "%TOOLS_DIR%\jdk_tmp"
     tar -xf "%TOOLS_DIR%\jdk.zip" -C "%TOOLS_DIR%\jdk_tmp" || goto :fail
-    rem The archive has one top-level folder (jdk-21...); rename it to "jdk"
+    rem The archive has one top-level folder (jdk-21...); rename it to "jdk-windows-x64"
     for /d %%D in ("%TOOLS_DIR%\jdk_tmp\*") do move "%%D" "%JDK_DIR%" >nul
     rmdir /s /q "%TOOLS_DIR%\jdk_tmp"
     del "%TOOLS_DIR%\jdk.zip"
