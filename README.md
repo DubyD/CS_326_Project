@@ -68,3 +68,6 @@ William Duby:
 
 Ivan Matviichuk:
 -Sprint 2: One of the biggest changes I made was making everything to run from a local folder, before I made shell/bat files to install dependencies in the root, but now it installs evertyhing in local tools directory, so everyones files are the same and can be ran identically. I considered installing the dependencies in the root, but then it would work on my computer and break on someone elses, so I wanted to make sure everyone running this have the same tools installed in the same location such as ghidra and JDK
+
+Edmund Chang:
+-Sprint 2: One decision I made was to use an async error handler instead of catching failures and sending a 500 status code directly. I decided to wrap the async handler in conversionController.js with asyncHandler. In addition, I decided to store the async handler in a utilities folder, that way different 
