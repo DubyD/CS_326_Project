@@ -14,7 +14,7 @@ const CONVERTER = path.resolve("backend", "converter.py");
 const SUPPORTED = ["c"];
 
 // Ghidra headless analysis is slow — minutes, not seconds.
-const TIMEOUT_MS = Number(process.env.CONVERT_TIMEOUT_MS) || 30000000;
+const TIMEOUT_MS = Number(process.env.CONVERT_TIMEOUT_MS) || 300_000;
 
 export const convert = async ({ language, sourceCode }) => {
   const lang = (language || "c").toLowerCase();
