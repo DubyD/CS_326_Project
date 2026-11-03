@@ -38,13 +38,28 @@ This project is to help with translating code from upper level languages and com
   - MacOS/Linux:
     npm install
     bash backend/setup_mac.sh
-  - Windows:
+
+  - Windows through powershell (A):
     npm install
     backend\setup_windows.bat
 
-- Then start the program:
+  - Windows through virtual environment (B):
+    python3 -m venv .venv
+    source .venv/bin/activate
+    MacOS installation instructions above.
+
+**\*\***\_\_\_\_**\*\***Starting the Program:**\*\***\_\_\_\_**\*\***
+
 - npm start
 - Our server is Listening on port 3000.
+
+**\*\***\_\_\_\_**\*\***Errors you may run into:**\*\***\_\_\_\_**\*\***
+
+Situation What happens
+Empty code box "Please enter code to convert." (400)
+Unsupported language "Unsupported language …" (400)
+Code that doesn't compile The gcc error message (422)
+Ghidra not installed "Ghidra not found…" (500). Use the dev container or run a setup script.
 
 **\*\***\_\_\_\_**\*\*Design Decisions:**\*\***\_\_\_\_**\*\*\*\*
 
