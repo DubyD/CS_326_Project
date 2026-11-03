@@ -31,17 +31,22 @@ Hasanat Ashraf**\_\_\_** Hasanat-Ashraf
 
 This project is to help with translating code from upper level languages and compiling it into machine code, then decompiling it into C language. We implemented an Ai component to alter the variable names into human language, and to remove some of the guard rails upper level languages deploy which can make for inefficient code, to allow greater access to more to performance that may be out of reach for people who are not systems programmers.
 
-Getting started:
+**\*\***\_\_\_\_**\*\***Getting started for new users:**\*\***\_\_\_\_**\*\***
 
 - Clone this repository
-- Installation: 
-- MacOS/Linux:
-npm install
-bash backend/setup_mac.sh
-- Windows
-npm install
-backend\setup_windows.bat
+- Installation:
+  - MacOS/Linux:
+    npm install
+    bash backend/setup_mac.sh
+  - Windows:
+    npm install
+    backend\setup_windows.bat
 
-- Then start the program: 
-  - npm start
+- Then start the program:
+- npm start
 - Our server is Listening on port 3000.
+
+**\*\***\_\_\_\_**\*\*Design Decisions:**\*\***\_\_\_\_**\*\*\*\*
+
+William Duby:
+-Sprint 2: I separated the controller, routes, services, and server. Having considered keeping these methods all in the server since it was already written in one file, however the readability was already difficult and would continue to get worse if left in the state that it was created. This version is superior because when we expand the functionality of the app we will have easier scalability and adaptability for future app functions. Without this change it would be challenging to ensure any updates or new functionality will give the expected results without combing through and matching up all possibilities. Readability is a major upgrade for any code.
