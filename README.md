@@ -48,6 +48,11 @@ This project is to help with translating code from upper level languages and com
     source .venv/bin/activate
     MacOS installation instructions above.
 
+    Windows:
+
+  - Download MongoDB using powershell with the prompt:
+    docker run -d --name mongo -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=dev -e MONGO_INITDB_ROOT_PASSWORD=devpassword mongo
+
 **\*\***\_\_\_\_**\*\***Starting the Program:**\*\***\_\_\_\_**\*\***
 
 - npm start
