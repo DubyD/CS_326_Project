@@ -52,7 +52,7 @@ export const convert = async ({ language, sourceCode }) => {
       throw new Error("Decompiler produced no output.");
     }
 
-    await conversionRepository.save({
+    await conversionRepository.create({
       language: lang,
       sourceCode,
       convertedCode,

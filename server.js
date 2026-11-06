@@ -1,6 +1,7 @@
 import express from "express";
 import conversionRoutes from "./routes/conversionRoutes.js";
 import pageRoutes from "./routes/pageRoutes.js";
+import { connectDB } from "./db.js";
 
 const app = express();
 const PORT = 3000; // This can be altered to a more preferable port if desired
@@ -19,6 +20,13 @@ app.use((req, res) => {
   res.status(404).json({ message: "page not found." });
 });
 
-app.listen(PORT, () => {
-  console.log(`Listening on http://localhost:${PORT}`);
-});
+connectDB()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Listening on http://localhost:${PORT}`);
+    });
+  })
+  .catch(() => {
+    console.error("no db");
+    process.exit(1);
+  });
