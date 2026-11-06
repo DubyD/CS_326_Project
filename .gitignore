@@ -3,3 +3,4 @@ node_modules/
 github.json
 package-lock.json
 .venv/
+public/output.css

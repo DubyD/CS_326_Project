@@ -29,10 +29,5 @@
   "devDependencies": {
     "@tailwindcss/cli": "^4.3.4",
     "tailwindcss": "^4.3.4"
-  },
-  "scripts": {
-    "build:css": "tailwindcss -i ./public/input.css -o ./public/output.css --minify",
-    "dev:css": "tailwindcss -i ./public/input.css -o ./public/output.css --watch",
-    "start": "npm run build:css && node server.js"
   }
 }
