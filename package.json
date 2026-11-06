@@ -22,5 +22,14 @@
   "bugs": {
     "url": "https://github.com/DubyD/CS_326_Project/issues"
   },
-  "homepage": "https://github.com/DubyD/CS_326_Project#readme"
+  "homepage": "https://github.com/DubyD/CS_326_Project#readme",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.4",
+    "tailwindcss": "^4.3.4"
+  },
+  "scripts": {
+    "build:css": "tailwindcss -i ./public/input.css -o ./public/output.css --minify",
+    "dev:css": "tailwindcss -i ./public/input.css -o ./public/output.css --watch",
+    "start": "npm run build:css && node server.js"
+  }
 }
