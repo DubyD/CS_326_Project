@@ -36,6 +36,8 @@ This project is to help with translating code from upper level languages and com
 - Clone this repository
 - Installation:
   - MacOS/Linux:
+    git clone https://github.com/DubyD/CS_326_Project.git
+    cd CS_326_Project
     npm install
     bash backend/setup_mac.sh
 
@@ -47,7 +49,6 @@ This project is to help with translating code from upper level languages and com
     python3 -m venv .venv
     source .venv/bin/activate
     MacOS installation instructions above.
-
     Windows:
 
   - Download MongoDB using powershell with the prompt:
