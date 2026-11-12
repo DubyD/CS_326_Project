@@ -26,7 +26,7 @@ connectDB()
       console.log(`Listening on http://localhost:${PORT}`);
     });
   })
-  .catch(() => {
-    console.error("no db");
+  .catch((err) => {
+    console.error("no db: ", err.message);
     process.exit(1);
   });
