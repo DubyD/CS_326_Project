@@ -34,24 +34,20 @@ This project is to help with translating code from upper level languages and com
 **\*\***\_\_\_\_**\*\***Getting started for new users:**\*\***\_\_\_\_**\*\***
 
 - Clone this repository
-- Installation:
+
+- Installation terminal commands:
+- Windows through virtual environment:
+  python3 -m venv .venv
+  source .venv/bin/activate
+  MacOS installation instructions below.
   - MacOS/Linux:
     npm install
     bash backend/setup_mac.sh
 
-  - Windows through powershell (A):
-    npm install
-    backend\setup_windows.bat
-
-  - Windows through virtual environment (B):
-    python3 -m venv .venv
-    source .venv/bin/activate
-    MacOS installation instructions above.
-
-    Windows:
-
   - Download MongoDB using powershell with the prompt:
-    docker run -d --name mongo -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=dev -e MONGO_INITDB_ROOT_PASSWORD=devpassword mongo
+    - docker run -d --name mongo -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=dev -e MONGO_INITDB_ROOT_PASSWORD=devpassword mongo
+    - docker start mongo
+    - docker network connect gantry mongo
 
 **\*\***\_\_\_\_**\*\***Starting the Program:**\*\***\_\_\_\_**\*\***
 
