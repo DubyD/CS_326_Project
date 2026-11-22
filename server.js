@@ -13,6 +13,18 @@ app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.static("public"));
 
+app.get("/health", async (req, res) => {
+  const databaseIsUp = mongoose.connection.readyState === 1;
+  const healthy = databaseIsUp;
+
+  res.status(healthy ? 200 : 503).json({
+    status: healthy ? "UP" : "DEGRADED",
+    db: databaseIsUp ? "connected" : "disconnected",
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString(),
+  });
+});
+
 app.use("/", pageRoutes);
 app.use("/about", conversionRoutes);
 app.use("/conversions", conversionRoutes);
