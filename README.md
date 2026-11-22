@@ -73,6 +73,20 @@ Unsupported language "Unsupported language …" (400)
 Code that doesn't compile The gcc error message (422)
 Ghidra not installed "Ghidra not found…" (500). Use the dev container or run a setup script.
 
+## Jest tests:
+
+Set up the testing environment with:
+
+```bash
+ npm i -D jest @jest/globals supertest
+```
+
+then running the tests with:
+
+```bash
+ npm test
+```
+
 ## Design Decisions:
 
 William Duby:
