@@ -80,6 +80,14 @@ William Duby:
 
 -Sprint 3: I updated the front end with tailwind which makes the whole experience look nice, while also adding a space with the servers history below the converted code space. This is aesthetically better than the previous version. I considered making a new tab with the code history and still may do that in sprint 4. Thank you Ivan for spear heading our project and keep it moving forward.
 
+- Sprint 4: I reformatted the README.md for new users setting up a clone of our server. And I wrote 6 jest tests that helped test the server:
+  - asyncHandler: errors get passed to next, and success doesn’t call it.
+  - pageController: the right views render with the right data.
+    conversionController: it returns 400 for empty code, 201 on success, and 404 for missing records; PATCH sends only the fields provided; DELETE returns 204; errors go to next.
+  - conversionService: unsupported languages are rejected; it writes the temp file, calls converter.py with the right paths, saves the result, and always cleans up; stderr, timeout and empty output each raise the right error.
+  - conversionRepository: each function makes the right Mongoose call (sort order, invalid-ID check, update options).
+  - conversionRoutes: the HTTP methods and paths reach the right handlers and return the right status codes, including 500 on errors.
+
 Ivan Matviichuk:
 -Sprint 2: One of the biggest changes I made was making everything to run from a local folder, before I made shell/bat files to install dependencies in the root, but now it installs evertyhing in local tools directory, so everyones files are the same and can be ran identically. I considered installing the dependencies in the root, but then it would work on my computer and break on someone elses, so I wanted to make sure everyone running this have the same tools installed in the same location such as ghidra and JDK
 -Sprint 3: For the MongoDB I made the repository be the only file that talks to Mongoose. repositories/conversionRepository.js, and routes, controllers/, and services only ever import the repository and none of them import mongoose. The connection itself is in db.js, which server.js imports and calls before app.listen. I could put the schema and the mongoose.connect() call into server.js, but didn't i would need to change to conversionController.js and conversionService.js and it would break the isolation.
