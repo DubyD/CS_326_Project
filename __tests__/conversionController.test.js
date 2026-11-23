@@ -80,14 +80,17 @@ describe("getConversion", () => {
     expect(res.json).toHaveBeenCalledWith({ id: "a" });
   });
 
-  test("404/403 errors from the service go to next", async () => {
+  test("403 from the service becomes a JSON response", async () => {
     const err = Object.assign(new Error("not your conversion."), {
       status: 403,
     });
     service.getOne.mockRejectedValue(err);
+    const res = mockRes();
     const next = jest.fn();
-    await c.getConversion({ params: { id: "a" }, user }, mockRes(), next);
-    expect(next).toHaveBeenCalledWith(err);
+    await c.getConversion({ params: { id: "a" }, user }, res, next);
+    expect(res.status).toHaveBeenCalledWith(403);
+    expect(res.json).toHaveBeenCalledWith({ message: "not your conversion." });
+    expect(next).not.toHaveBeenCalled();
   });
 });
 
