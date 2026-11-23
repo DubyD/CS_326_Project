@@ -33,7 +33,6 @@ This project is to help with translating code from upper level languages and com
 ```bash
   git clone https://github.com/DubyD/CS_326_Project
   cd CS_326_Project
-
 ```
 
 Windows through virtual environment:
@@ -52,10 +51,11 @@ MacOS installation instructions below.
 
 Download MongoDB using powershell with the prompt:
 
-````powershell
+```powershell
     - docker run -d --name mongo -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=dev -e MONGO_INITDB_ROOT_PASSWORD=devpassword mongo
     - docker start mongo
     - docker network connect gantry mongo
+```
 
 - Make your own secrets file, .env is never committed so a fresh clone has none:
   - MacOS/Linux: cp .env.example .env
@@ -144,7 +144,7 @@ Set up the testing environment with:
 
 ```bash
  npm i -D jest @jest/globals supertest
-````
+```
 
 then running the tests with:
 
