@@ -166,6 +166,17 @@ William Duby:
   - conversionService: unsupported languages are rejected; it writes the temp file, calls converter.py with the right paths, saves the result, and always cleans up; stderr, timeout and empty output each raise the right error.
   - conversionRepository: each function makes the right Mongoose call (sort order, invalid-ID check, update options).
   - conversionRoutes: the HTTP methods and paths reach the right handlers and return the right status codes, including 500 on errors.
+  - authService: passwords are hashed and never stored in plain text; a duplicate username returns 409; a wrong user and a wrong password get the same 401 message.
+  - authMiddleware: logged-out requests are redirected (pages) or get a 401 (API); a valid session attaches the user; the session of a deleted user is destroyed.
+  - authRoutes: the full HTTP flow with real sessions (sign up, visit protected pages, /me, log out, locked again); posting role=admin at sign-up doesn't grant admin; login and signup pages render with error messages.
+  - userRepository: queries, invalid IDs, and makeAdmin both promoting an existing user and creating a new one.
+  - conversionAuth: every /conversions route returns 401 when logged out.
+  - conversionOwnership: members only see and change their own conversions, admins can access all of them, and other users get a 403 without anything changing.
+  - conversion controller, routes, repository: updated for the new owner field, the service-layer methods, and asyncHandler returning error statuses as JSON.
+  - Added views/login.ejs and views/signup.ejs, which share one template (views/partials/auth.ejs) styled with Tailwind to match the rest of the site.
+  - The forms post to the existing /login and /signup routes. Errors such as a wrong password, a taken username or a short password show on the form.
+  - requireLogin now sets res.locals.user, so the nav on the Converter and About pages shows the logged-in username and a Log out button.
+  - Logged-out visitors to / or /about are redirected to /login.
 
 Ivan Matviichuk:
 -Sprint 2: One of the biggest changes I made was making everything to run from a local folder, before I made shell/bat files to install dependencies in the root, but now it installs evertyhing in local tools directory, so everyones files are the same and can be ran identically. I considered installing the dependencies in the root, but then it would work on my computer and break on someone elses, so I wanted to make sure everyone running this have the same tools installed in the same location such as ghidra and JDK
