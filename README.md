@@ -1,18 +1,15 @@
-# CS_326_Project
+## CS_326_Project
 
 Web Development Server where our personal project lives
 
-\_**\_Name\*\***\_\_\_**\*\***Github account:\_\_\_\_
+| Name            | GitHub Username |
+| --------------- | --------------- |
+| William Duby    | DubyD           |
+| Edmund Chang    | Edmundchang7    |
+| Ivan Matviichuk | imatvii         |
+| Hasanat Ashraf  | Hasanat-Ashraf  |
 
-William Duby\***\*\_\*\***DubyD
-
-Edmund Chang**\_\_\_\_**Edmundchang7
-
-Ivan Matviichuk**\_\_**imatvii
-
-Hasanat Ashraf**\_\_\_** Hasanat-Ashraf
-
-**\*\***\_\_\_\_**\*\***Working agreement:**\*\***\_\_\_\_**\*\***
+## Working agreement:
 
 - As a team we decided to communicate through Discord
   in order to have unlimited time on video calls when needed.
@@ -27,29 +24,35 @@ Hasanat Ashraf**\_\_\_** Hasanat-Ashraf
   out we will have a vote between the members present at the
   time of the disagreement.
 
-**\*\***\_\_\_\_**\*\***Project Overview:**\*\***\_\_\_\_**\*\***
+## Project Overview:
 
 This project is to help with translating code from upper level languages and compiling it into machine code, then decompiling it into C language. We implemented an Ai component to alter the variable names into human language, and to remove some of the guard rails upper level languages deploy which can make for inefficient code, to allow greater access to more to performance that may be out of reach for people who are not systems programmers.
 
-**\*\***\_\_\_\_**\*\***Getting started for new users:**\*\***\_\_\_\_**\*\***
+## Getting started for new users:
 
-- Clone this repository
+```bash
+  git clone https://github.com/DubyD/CS_326_Project
+  cd CS_326_Project
 
-- Installation terminal commands:
-- Windows through virtual environment:
+```
+
+Windows through virtual environment:
+
+```bash
   python3 -m venv .venv
   source .venv/bin/activate
-  MacOS installation instructions below.
-  - MacOS/Linux:
+```
+
+MacOS installation instructions below.
+
+```bash
     npm install
     bash backend/setup_mac.sh
+```
 
-  - Or on a Mac with homebrew, which needs no docker and no username and password:
-    brew install mongodb-community
-    brew services start mongodb-community
-    and then MONGO_URI in .env is just mongodb://localhost:27017, which is also what
-    the app falls back to. Stop it with brew services stop mongodb-community.
-  - Download MongoDB using powershell with the prompt:
+Download MongoDB using powershell with the prompt:
+
+````powershell
     - docker run -d --name mongo -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=dev -e MONGO_INITDB_ROOT_PASSWORD=devpassword mongo
     - docker start mongo
     - docker network connect gantry mongo
@@ -61,7 +64,7 @@ This project is to help with translating code from upper level languages and com
     SESSION_SECRET is the string used to sign the login cookie. server.js reads both
     from the environment and quits with a message if SESSION_SECRET is missing.
 
-**\*\***\_\_\_\_**\*\***Starting the Program:**\*\***\_\_\_\_**\*\***
+## Starting the Program:
 
 - npm start
 - Our server is Listening on port 3000.
@@ -86,7 +89,7 @@ This project is to help with translating code from upper level languages and com
   - the same thing by hand in the database:
     db.users.updateOne({username: "admin"}, {$set: {role: "admin"}})
 
-**\*\***\_\_\_\_**\*\***Log in and roles:**\*\***\_\_\_\_**\*\***
+## Log in and roles:
 
 - The pages are GET /login and GET /signup, the routes are POST /signup, POST /login and
   POST /logout with GET /logout too, and GET /me answers your username and role. The
@@ -103,7 +106,7 @@ This project is to help with translating code from upper level languages and com
   signup body still gives you an ordinary member. Admins are made with npm run seed:admin
   or by updating the document in the database, as said above.
 
-**\*\***\_\_\_\_**\*\***Who may change what:**\*\***\_\_\_\_**\*\***
+## Who may change what:
 
 - Logged out people get nothing. The pages send you to /login, and /me and every route
   under /conversions answer 401 with "log in first." and nothing happens. That is
@@ -119,7 +122,7 @@ This project is to help with translating code from upper level languages and com
 - Logged in as an admin the same patch or delete does succeed, and an admin's history
   list shows everybody's conversions while a member only sees their own.
 
-**\*\***\_\_\_\_**\*\***Errors you may run into:**\*\***\_\_\_\_**\*\***
+## Errors you may run into:
 
 Situation What happens
 Not logged in, on a page Sent to /login
@@ -135,12 +138,34 @@ Unsupported language "Unsupported language …" (400)
 Code that doesn't compile The gcc error message (422)
 Ghidra not installed "Ghidra not found…" (500). Use the dev container or run a setup script.
 
-**\*\***\_\_\_\_**\*\*Design Decisions:**\*\***\_\_\_\_**\*\*\*\*
+## Jest tests:
+
+Set up the testing environment with:
+
+```bash
+ npm i -D jest @jest/globals supertest
+````
+
+then running the tests with:
+
+```bash
+ npm test
+```
+
+## Design Decisions:
 
 William Duby:
 -Sprint 2: I separated the controller, routes, services, and server. Having considered keeping these methods all in the server since it was already written in one file, however the readability was already difficult and would continue to get worse if left in the state that it was created. This version is superior because when we expand the functionality of the app we will have easier scalability and adaptability for future app functions. Without this change it would be challenging to ensure any updates or new functionality will give the expected results without combing through and matching up all possibilities. Readability is a major upgrade for any code.
 
 -Sprint 3: I updated the front end with tailwind which makes the whole experience look nice, while also adding a space with the servers history below the converted code space. This is aesthetically better than the previous version. I considered making a new tab with the code history and still may do that in sprint 4. Thank you Ivan for spear heading our project and keep it moving forward.
+
+- Sprint 4: I reformatted the README.md for new users setting up a clone of our server. And I wrote 6 jest tests that helped test the server:
+  - asyncHandler: errors get passed to next, and success doesn’t call it.
+  - pageController: the right views render with the right data.
+    conversionController: it returns 400 for empty code, 201 on success, and 404 for missing records; PATCH sends only the fields provided; DELETE returns 204; errors go to next.
+  - conversionService: unsupported languages are rejected; it writes the temp file, calls converter.py with the right paths, saves the result, and always cleans up; stderr, timeout and empty output each raise the right error.
+  - conversionRepository: each function makes the right Mongoose call (sort order, invalid-ID check, update options).
+  - conversionRoutes: the HTTP methods and paths reach the right handlers and return the right status codes, including 500 on errors.
 
 Ivan Matviichuk:
 -Sprint 2: One of the biggest changes I made was making everything to run from a local folder, before I made shell/bat files to install dependencies in the root, but now it installs evertyhing in local tools directory, so everyones files are the same and can be ran identically. I considered installing the dependencies in the root, but then it would work on my computer and break on someone elses, so I wanted to make sure everyone running this have the same tools installed in the same location such as ghidra and JDK
