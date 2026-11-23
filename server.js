@@ -33,7 +33,7 @@ app.use(
     saveUninitialized: false,
     httpOnly: true,
     sameSite: "lax",
-  })
+  }),
 );
 
 app.get("/health", async (req, res) => {
