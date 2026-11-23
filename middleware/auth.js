@@ -13,6 +13,7 @@ export const requireLogin = asyncHandler(async (req, res, next) => {
   const user = await load(req);
   if (!user) return res.redirect("/login");
   req.user = user;
+  res.locals.user = user;
   next();
 });
 
