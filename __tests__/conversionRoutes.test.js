@@ -1,17 +1,25 @@
 import { jest } from "@jest/globals";
 
-const service = { convert: jest.fn() };
-const repo = {
-  getAll: jest.fn(),
-  findById: jest.fn(),
-  updateById: jest.fn(),
-  removeById: jest.fn(),
+const service = {
+  convert: jest.fn(),
+  list: jest.fn(),
+  getOne: jest.fn(),
+  update: jest.fn(),
+  remove: jest.fn(),
 };
 jest.unstable_mockModule("../services/conversionService.js", () => service);
-jest.unstable_mockModule("../repositories/conversionRepository.js", () => repo);
+
+// pretend a logged-in member is making every request
+const user = { _id: "u1", role: "member" };
 jest.unstable_mockModule("../middleware/auth.js", () => ({
-  requireApi: (req, res, next) => next(),
-  requireLogin: (req, res, next) => next(),
+  requireApi: (req, res, next) => {
+    req.user = user;
+    next();
+  },
+  requireLogin: (req, res, next) => {
+    req.user = user;
+    next();
+  },
 }));
 
 const { default: express } = await import("express");
@@ -21,8 +29,12 @@ const { default: router } = await import("../routes/conversionRoutes.js");
 const app = express();
 app.use(express.json());
 app.use("/conversions", router);
+// quiet JSON error handler so failures don't spam the console
+app.use((err, req, res, next) =>
+  res.status(err.status || 500).json({ message: err.message }),
+);
 
-beforeEach(() => jest.clearAllMocks());
+beforeEach(() => jest.resetAllMocks());
 
 test("POST / returns 400 without code", async () => {
   await request(app).post("/conversions").send({}).expect(400);
@@ -35,21 +47,34 @@ test("POST / returns 201", async () => {
     .send({ sourceCode: "x" })
     .expect(201);
   expect(res.body).toEqual({ convertedCode: "out" });
+  expect(service.convert).toHaveBeenCalledWith(
+    expect.objectContaining({ owner: "u1" }),
+  );
 });
 
 test("GET / lists", async () => {
-  repo.getAll.mockResolvedValue([{ a: 1 }]);
+  service.list.mockResolvedValue([{ a: 1 }]);
   const res = await request(app).get("/conversions").expect(200);
   expect(res.body).toEqual([{ a: 1 }]);
 });
 
-test("GET /:id 404", async () => {
-  repo.findById.mockResolvedValue(null);
+test("GET /:id 404 when missing", async () => {
+  service.getOne.mockRejectedValue(
+    Object.assign(new Error("no conversions"), { status: 404 }),
+  );
   await request(app).get("/conversions/abc").expect(404);
 });
 
+test("GET /:id 403 for someone else's record", async () => {
+  service.getOne.mockRejectedValue(
+    Object.assign(new Error("not your conversion."), { status: 403 }),
+  );
+  const res = await request(app).get("/conversions/abc").expect(403);
+  expect(res.body.message).toBe("not your conversion.");
+});
+
 test("PATCH /:id updates", async () => {
-  repo.updateById.mockResolvedValue({ language: "c" });
+  service.update.mockResolvedValue({ language: "c" });
   await request(app)
     .patch("/conversions/abc")
     .send({ language: "c" })
@@ -57,7 +82,7 @@ test("PATCH /:id updates", async () => {
 });
 
 test("DELETE /:id 204", async () => {
-  repo.removeById.mockResolvedValue({});
+  service.remove.mockResolvedValue({});
   await request(app).delete("/conversions/abc").expect(204);
 });
 
