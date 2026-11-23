@@ -1,5 +1,4 @@
 import * as conversionService from "../services/conversionService.js";
-import * as conversionRepository from "../repositories/conversionRepository.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
 export const createConversion = asyncHandler(async (req, res) => {
@@ -9,24 +8,24 @@ export const createConversion = asyncHandler(async (req, res) => {
     return res.status(400).json({ message: "Please enter code to convert." });
   }
 
+  // owner comes from the session, never from the request body
   const convertedCode = await conversionService.convert({
     language,
     sourceCode,
+    owner: req.user._id,
   });
 
   res.status(201).json({ convertedCode });
 });
 
-// List every saved conversion (newest first).
+// List saved conversions (newest first), admins see all of them.
 export const listConversions = asyncHandler(async (req, res) => {
-  const conversions = await conversionRepository.getAll();
-  res.json(conversions);
+  res.json(await conversionService.list(req.user));
 });
 
 // View by id
 export const getConversion = asyncHandler(async (req, res) => {
-  const conversion = await conversionRepository.findById(req.params.id);
-  if (!conversion) return res.status(404).json({ message: "no conversions" });
+  const conversion = await conversionService.getOne(req.params.id, req.user);
   res.json(conversion);
 });
 
@@ -38,14 +37,18 @@ export const updateConversion = asyncHandler(async (req, res) => {
   if (sourceCode !== undefined) fields.sourceCode = sourceCode;
   if (convertedCode !== undefined) fields.convertedCode = convertedCode;
 
-  const conversion = await conversionRepository.updateById(req.params.id, fields);
+  const conversion = await conversionService.update(
+    req.params.id,
+    fields,
+    req.user
+  );
   if (!conversion) return res.status(404).json({ message: "no conversions" });
   res.json(conversion);
 });
 
 // Delete by id
 export const deleteConversion = asyncHandler(async (req, res) => {
-  const conversion = await conversionRepository.removeById(req.params.id);
+  const conversion = await conversionService.remove(req.params.id, req.user);
   if (!conversion) return res.status(404).json({ message: "no conversions" });
   res.status(204).end();
 });
