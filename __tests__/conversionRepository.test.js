@@ -10,17 +10,27 @@ const Model = {
 const isValidObjectId = jest.fn();
 jest.unstable_mockModule("mongoose", () => {
   function Schema() {}
+  Schema.Types = { ObjectId: "ObjectId" };
   const m = { Schema, model: jest.fn(() => Model), isValidObjectId };
   return { default: m, ...m };
 });
 
 const repo = await import("../repositories/conversionRepository.js");
-beforeEach(() => jest.clearAllMocks());
+beforeEach(() => jest.resetAllMocks());
 
 test("getAll sorts newest first", async () => {
   const sort = jest.fn().mockResolvedValue([1]);
   Model.find.mockReturnValue({ sort });
   await expect(repo.getAll()).resolves.toEqual([1]);
+  expect(Model.find).toHaveBeenCalledWith();
+  expect(sort).toHaveBeenCalledWith({ createdAt: -1 });
+});
+
+test("getMine filters by owner, newest first", async () => {
+  const sort = jest.fn().mockResolvedValue([2]);
+  Model.find.mockReturnValue({ sort });
+  await expect(repo.getMine("u1")).resolves.toEqual([2]);
+  expect(Model.find).toHaveBeenCalledWith({ owner: "u1" });
   expect(sort).toHaveBeenCalledWith({ createdAt: -1 });
 });
 
@@ -39,17 +49,19 @@ test("findById returns doc or null", async () => {
   await expect(repo.findById("ok")).resolves.toBeNull();
 });
 
-test("create passes only known fields", async () => {
+test("create passes only known fields, including owner", async () => {
   await repo.create({
     language: "c",
     sourceCode: "s",
     convertedCode: "o",
+    owner: "u1",
     extra: 1,
   });
   expect(Model.create).toHaveBeenCalledWith({
     language: "c",
     sourceCode: "s",
     convertedCode: "o",
+    owner: "u1",
   });
 });
 

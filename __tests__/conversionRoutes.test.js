@@ -9,6 +9,10 @@ const repo = {
 };
 jest.unstable_mockModule("../services/conversionService.js", () => service);
 jest.unstable_mockModule("../repositories/conversionRepository.js", () => repo);
+jest.unstable_mockModule("../middleware/auth.js", () => ({
+  requireApi: (req, res, next) => next(),
+  requireLogin: (req, res, next) => next(),
+}));
 
 const { default: express } = await import("express");
 const { default: request } = await import("supertest");
