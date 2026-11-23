@@ -4,6 +4,7 @@ import { readFile, writeFile, mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import * as conversionRepository from "../repositories/conversionRepository.js";
+import { HttpError } from "../utils/httpError.js";
 
 const execFileAsync = promisify(execFile);
 
@@ -16,7 +17,7 @@ const SUPPORTED = ["c"];
 // Ghidra headless analysis is slow — minutes, not seconds.
 const TIMEOUT_MS = Number(process.env.CONVERT_TIMEOUT_MS) || 30000000;
 
-export const convert = async ({ language, sourceCode }) => {
+export const convert = async ({ language, sourceCode, owner }) => {
   const lang = (language || "c").toLowerCase();
   if (!SUPPORTED.includes(lang)) {
     throw new Error(`Unsupported language: ${language}`);
@@ -56,10 +57,39 @@ export const convert = async ({ language, sourceCode }) => {
       language: lang,
       sourceCode,
       convertedCode,
+      owner,
     });
     return convertedCode;
   } finally {
     // Clean up temp input/output regardless of outcome.
     await rm(dir, { recursive: true, force: true });
   }
+};
+
+const isOwnerOrAdmin = (record, user) =>
+  user.role === "admin" || String(record.owner) === String(user._id);
+
+// load the record first, then check the owner, so nothing gets changed by someone else
+const loadOwned = async (id, user) => {
+  const record = await conversionRepository.findById(id);
+  if (!record) throw new HttpError(404, "no conversions");
+  if (!isOwnerOrAdmin(record, user)) throw new HttpError(403, "not your conversion.");
+  return record;
+};
+
+export const list = async (user) =>
+  user.role === "admin"
+    ? conversionRepository.getAll()
+    : conversionRepository.getMine(user._id);
+
+export const getOne = async (id, user) => loadOwned(id, user);
+
+export const update = async (id, fields, user) => {
+  await loadOwned(id, user);
+  return conversionRepository.updateById(id, fields);
+};
+
+export const remove = async (id, user) => {
+  await loadOwned(id, user);
+  return conversionRepository.removeById(id);
 };
